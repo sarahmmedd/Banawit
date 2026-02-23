@@ -9,7 +9,6 @@ class CustomBudgetCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: 300.w,
-      height: 120.h,
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(12.r),

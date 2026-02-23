@@ -14,47 +14,50 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Column(
-          children: [
-            Stack(
-              clipBehavior: Clip.none,
-              children: [
-                MainContainer(),
-                Positioned(
-                  bottom: -80.h,
-                  right: 20.w,
-                  left: 20.w,
-                  child: CustomBudgetCard(),
-                ),
-              ],
-            ),
-            SizedBox(height: 90.h),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                InkWell(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => BudgetScreen()),
-                    );
-                  },
-                  child: CustomCard(icon: Icons.trending_up, title: "Budget"),
-                ),
-                InkWell(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => CategoriesScreen(),
-                      ),
-                    );
-                  },
-                  child: CustomCard(icon: Icons.grid_view, title: "Categories"),
-                ),
-              ],
-            ),
-          ],
+        child: SingleChildScrollView(
+          scrollDirection: Axis.vertical,
+          child: Column(
+            children: [
+              Stack(
+                clipBehavior: Clip.none,
+                children: [
+                  MainContainer(),
+                  Positioned(
+                    bottom: -80.h,
+                    right: 20.w,
+                    left: 20.w,
+                    child: CustomBudgetCard(),
+                  ),
+                ],
+              ),
+              SizedBox(height: 90.h),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  InkWell(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => BudgetScreen()),
+                      );
+                    },
+                    child: CustomCard(icon: Icons.trending_up, title: "Budget"),
+                  ),
+                  InkWell(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => CategoriesScreen(),
+                        ),
+                      );
+                    },
+                    child: CustomCard(icon: Icons.grid_view, title: "Categories"),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
       floatingActionButton: FloatingActionButton(
