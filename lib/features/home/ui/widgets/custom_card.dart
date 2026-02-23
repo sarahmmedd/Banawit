@@ -32,7 +32,6 @@ class CustomCard extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(15),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
@@ -45,14 +44,16 @@ class CustomCard extends StatelessWidget {
               child: Icon(icon, color: Colors.white),
             ),
             SizedBox(height: 10.h),
-            Text(
-              title,
-              style: TextStyle(
-                color: Colors.black,
-                fontWeight: FontWeight.bold,
-                fontSize: 18.sp,
+            Center(
+              child: Text(
+                title,
+                style: TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18.sp,
+                ),
+                textAlign: TextAlign.center,
               ),
-              textAlign: TextAlign.center,
             ),
           ],
         ),
