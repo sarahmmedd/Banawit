@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:banawit/core/theme/app_colors.dart';
 
 class CustomCard extends StatelessWidget {
   final String title;
   final IconData icon;
+
   const CustomCard({super.key, required this.title, required this.icon});
 
   @override
@@ -11,17 +13,17 @@ class CustomCard extends StatelessWidget {
     return Container(
       width: 146.w,
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.cardBackground,
         borderRadius: BorderRadius.circular(12.r),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.18),
+            color: AppColors.textPrimary.withOpacity(0.18),
             blurRadius: 35,
             spreadRadius: 3,
             offset: Offset(0, 20),
           ),
           BoxShadow(
-            color: Colors.black.withOpacity(0.08),
+            color: AppColors.textPrimary.withOpacity(0.08),
             blurRadius: 10,
             spreadRadius: 1,
             offset: Offset(0, 5),
@@ -37,18 +39,18 @@ class CustomCard extends StatelessWidget {
               width: 40.w,
               height: 40.h,
               decoration: BoxDecoration(
-                color: Color(0xFFDA144F),
+                color: AppColors.primary,
                 borderRadius: BorderRadius.circular(12.r),
               ),
-              child: Icon(icon, color: Colors.white),
+              child: Icon(icon, color: AppColors.cardBackground),
             ),
             SizedBox(height: 10.h),
             Center(
               child: Text(
                 title,
                 style: TextStyle(
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold,
+                  color: AppColors.textPrimary,
+                  fontWeight: FontWeight.w600,
                   fontSize: 18.sp,
                 ),
                 textAlign: TextAlign.center,
