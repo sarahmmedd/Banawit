@@ -6,6 +6,7 @@ import 'package:banawit/features/home/ui/widgets/custom_card.dart';
 import 'package:banawit/features/home/ui/widgets/main_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:banawit/core/theme/app_colors.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
@@ -13,9 +14,9 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.scaffoldBackground,
       body: SafeArea(
         child: SingleChildScrollView(
-          scrollDirection: Axis.vertical,
           child: Column(
             children: [
               Stack(
@@ -23,16 +24,16 @@ class HomeScreen extends StatelessWidget {
                 children: [
                   MainContainer(),
                   Positioned(
-                    bottom: -80.h,
+                    bottom: -85.h,
                     right: 20.w,
                     left: 20.w,
                     child: CustomBudgetCard(),
                   ),
                 ],
               ),
-              SizedBox(height: 90.h),
+              SizedBox(height: 100.h),
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   InkWell(
                     onTap: () {
@@ -52,7 +53,10 @@ class HomeScreen extends StatelessWidget {
                         ),
                       );
                     },
-                    child: CustomCard(icon: Icons.grid_view, title: "Categories"),
+                    child: CustomCard(
+                      icon: Icons.grid_view,
+                      title: "Categories",
+                    ),
                   ),
                 ],
               ),
@@ -67,8 +71,8 @@ class HomeScreen extends StatelessWidget {
             MaterialPageRoute(builder: (context) => ExpensesScreen()),
           );
         },
-        child: Icon(Icons.add, color: Colors.white, size: 30),
-        backgroundColor: Color(0xFFDA144F),
+        backgroundColor: AppColors.primary,
+        child: const Icon(Icons.add, color: Colors.white, size: 30),
       ),
     );
   }

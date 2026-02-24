@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
+import 'package:banawit/core/theme/app_colors.dart';
 
 class CustomBudgetCard extends StatelessWidget {
   const CustomBudgetCard({super.key});
@@ -10,17 +11,17 @@ class CustomBudgetCard extends StatelessWidget {
     return Container(
       width: 300.w,
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.cardBackground,
         borderRadius: BorderRadius.circular(12.r),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.18),
+            color: AppColors.textPrimary.withOpacity(0.18),
             blurRadius: 35,
             spreadRadius: 3,
             offset: Offset(0, 20),
           ),
           BoxShadow(
-            color: Colors.black.withOpacity(0.08),
+            color: AppColors.textPrimary.withOpacity(0.08),
             blurRadius: 10,
             spreadRadius: 1,
             offset: Offset(0, 5),
@@ -38,14 +39,18 @@ class CustomBudgetCard extends StatelessWidget {
               children: [
                 Text(
                   "Remaining Budget",
-                  style: TextStyle(color: Colors.black, fontSize: 18.sp),
+                  style: TextStyle(
+                    color: AppColors.textSecondary,
+                    fontSize: 14.sp,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
                 SizedBox(height: 6.h),
                 Text(
                   "\$300.00",
                   style: TextStyle(
-                    color: Color(0xFFDA144F),
-                    fontSize: 35.sp,
+                    color: AppColors.primary,
+                    fontSize: 30.sp,
                     fontWeight: FontWeight.w700,
                   ),
                 ),
@@ -57,10 +62,13 @@ class CustomBudgetCard extends StatelessWidget {
               percent: 0.85,
               center: Text(
                 "85%",
-                style: TextStyle(fontWeight: FontWeight.bold),
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: AppColors.textPrimary,
+                ),
               ),
-              progressColor: Colors.black,
-              backgroundColor: Colors.grey.shade300,
+              progressColor: AppColors.textPrimary,
+              backgroundColor: AppColors.border,
               circularStrokeCap: CircularStrokeCap.round,
               animation: true,
               animationDuration: 800,
