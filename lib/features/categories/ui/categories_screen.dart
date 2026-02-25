@@ -2,36 +2,36 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:banawit/core/theme/app_colors.dart';
 import 'widgets/category_card.dart';
+import 'popup.dart';
 
-class CategoriesScreen extends StatelessWidget {
+class CategoriesScreen extends StatefulWidget {
   const CategoriesScreen({super.key});
 
-  // rokaya "dialog"
-  void _showAddCategoryDialog(BuildContext context) {
-    showDialog(
+  @override
+  State<CategoriesScreen> createState() => _CategoriesScreenState();
+}
+
+class _CategoriesScreenState extends State<CategoriesScreen> {
+  List<Map<String, String>> categories = [
+    {"title": "Food", "emoji": "🍔"},
+    {"title": "Transport", "emoji": "🚗"},
+    {"title": "Shopping", "emoji": "🛍️"},
+    {"title": "Entertainment", "emoji": "🎬"},
+    {"title": "Health", "emoji": "🏥"},
+    {"title": "Bills", "emoji": "💰"},
+  ];
+
+  Future<void> _showAddCategoryDialog() async {
+    final result = await showDialog(
       context: context,
-      builder: (context) {
-        return Dialog(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20.r),
-          ),
-          child: Container(
-            height: 250.h,
-            padding: EdgeInsets.all(20.w),
-            decoration: BoxDecoration(
-              color: AppColors.cardBackground,
-              borderRadius: BorderRadius.circular(20.r),
-            ),
-            child: const Center(
-              child: Text(
-                "Add Category Form Here",
-                style: TextStyle(fontSize: 16),
-              ),
-            ),
-          ),
-        );
-      },
+      builder: (context) => const Popup(),
     );
+
+    if (result != null) {
+      setState(() {
+        categories.add(result);
+      });
+    }
   }
 
   @override
@@ -41,7 +41,7 @@ class CategoriesScreen extends StatelessWidget {
       body: SafeArea(
         child: Column(
           children: [
-            //Top Gradient Header
+            /// HEADER
             Container(
               width: double.infinity,
               padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 25.h),
@@ -101,28 +101,30 @@ class CategoriesScreen extends StatelessWidget {
 
             SizedBox(height: 25.h),
 
-            // Grid
+            /// GRID
             Expanded(
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20.w),
-                child: GridView.count(
-                  crossAxisCount: 2,
-                  mainAxisSpacing: 20.h,
-                  crossAxisSpacing: 20.w,
-                  childAspectRatio: 0.9,
-                  children: const [
-                    CategoryCard(title: "Food", emoji: "🍔"),
-                    CategoryCard(title: "Transport", emoji: "🚗"),
-                    CategoryCard(title: "Shopping", emoji: "🛍️"),
-                    CategoryCard(title: "Entertainment", emoji: "🎬"),
-                    CategoryCard(title: "Health", emoji: "🏥"),
-                    CategoryCard(title: "Bills", emoji: "💰"),
-                  ],
+                child: GridView.builder(
+                  itemCount: categories.length,
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    mainAxisSpacing: 20.h,
+                    crossAxisSpacing: 20.w,
+                    childAspectRatio: 0.9,
+                  ),
+                  itemBuilder: (context, index) {
+                    final category = categories[index];
+                    return CategoryCard(
+                      title: category["title"]!,
+                      emoji: category["emoji"]!,
+                    );
+                  },
                 ),
               ),
             ),
 
-            // Add Category Button
+            /// BUTTON
             Padding(
               padding: EdgeInsets.all(20.w),
               child: SizedBox(
@@ -135,20 +137,10 @@ class CategoriesScreen extends StatelessWidget {
                       borderRadius: BorderRadius.circular(16.r),
                     ),
                   ),
-                  onPressed: () => _showAddCategoryDialog(context),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Icon(Icons.add, color: AppColors.cardBackground),
-                      SizedBox(width: 8.w),
-                      const Text(
-                        "Add Category",
-                        style: TextStyle(
-                          color: AppColors.cardBackground,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ],
+                  onPressed: _showAddCategoryDialog,
+                  child: const Text(
+                    "Add Category",
+                    style: TextStyle(color: Colors.white),
                   ),
                 ),
               ),
