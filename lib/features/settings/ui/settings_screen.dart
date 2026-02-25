@@ -1,7 +1,7 @@
-// import 'package:banawit/features/settings/ui/components/first_section.dart';
-// import 'package:banawit/features/settings/ui/components/fourth_section.dart';
-// import 'package:banawit/features/settings/ui/components/second_section.dart';
-// import 'package:banawit/features/settings/ui/components/third_section.dart';
+import 'package:banawit/features/settings/ui/components/first_section.dart';
+import 'package:banawit/features/settings/ui/components/fourth_section.dart';
+import 'package:banawit/features/settings/ui/components/second_section.dart';
+import 'package:banawit/features/settings/ui/components/third_section.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:banawit/core/theme/app_colors.dart';
@@ -60,7 +60,7 @@ class SettingsScreen extends StatelessWidget {
                 Text(
                   "Settings",
                   style: TextStyle(
-                    fontSize: 18.sp,
+                    fontSize: 22.sp,
                     fontWeight: FontWeight.w700,
                     color: Colors.white,
                   ),
@@ -70,20 +70,20 @@ class SettingsScreen extends StatelessWidget {
           ),
 
           /// BODY
-          // Expanded(
-          //   child: SingleChildScrollView(
-          //     child: Column(
-          //       children: const [
-          //         SizedBox(height: 20),
-          //         FirstSection(),
-          //         SecondSection(),
-          //         ThirdSection(),
-          //         FourthSection(),
-          //         SizedBox(height: 30),
-          //       ],
-          //     ),
-          //   ),
-          // ),
+          Expanded(
+            child: SingleChildScrollView(
+              child: Column(
+                children: const [
+                  SizedBox(height: 20),
+                  FirstSection(),
+                  SecondSection(),
+                  ThirdSection(),
+                  FourthSection(),
+                  SizedBox(height: 30),
+                ],
+              ),
+            ),
+          ),
         ],
       ),
     );
