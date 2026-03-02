@@ -1,10 +1,12 @@
 import 'package:banawit/features/budget/ui/budget_screen.dart';
+import 'package:banawit/features/categories/cubit/categories_cubit.dart';
 import 'package:banawit/features/categories/ui/categories_screen.dart';
 import 'package:banawit/features/expenses/ui/expenses_screen.dart';
 import 'package:banawit/features/home/ui/widgets/custom_budget_card.dart';
 import 'package:banawit/features/home/ui/widgets/custom_card.dart';
 import 'package:banawit/features/home/ui/widgets/main_container.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:banawit/core/theme/app_colors.dart';
 
@@ -49,7 +51,10 @@ class HomeScreen extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => CategoriesScreen(),
+                          builder: (context) => BlocProvider(
+                            create: (context) => CategoriesCubit(),
+                            child: const CategoriesScreen(),
+                          ),
                         ),
                       );
                     },

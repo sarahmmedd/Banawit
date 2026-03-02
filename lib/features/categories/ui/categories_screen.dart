@@ -1,38 +1,14 @@
+import 'package:banawit/features/categories/cubit/categories_cubit.dart';
+import 'package:banawit/features/categories/cubit/categories_state.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:banawit/core/theme/app_colors.dart';
 import 'widgets/category_card.dart';
 import 'popup.dart';
 
-class CategoriesScreen extends StatefulWidget {
+class CategoriesScreen extends StatelessWidget {
   const CategoriesScreen({super.key});
-
-  @override
-  State<CategoriesScreen> createState() => _CategoriesScreenState();
-}
-
-class _CategoriesScreenState extends State<CategoriesScreen> {
-  List<Map<String, String>> categories = [
-    {"title": "Food", "emoji": "🍔"},
-    {"title": "Transport", "emoji": "🚗"},
-    {"title": "Shopping", "emoji": "🛍️"},
-    {"title": "Entertainment", "emoji": "🎬"},
-    {"title": "Health", "emoji": "🏥"},
-    {"title": "Bills", "emoji": "💰"},
-  ];
-
-  Future<void> _showAddCategoryDialog() async {
-    final result = await showDialog(
-      context: context,
-      builder: (context) => const Popup(),
-    );
-
-    if (result != null) {
-      setState(() {
-        categories.add(result);
-      });
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +23,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
               padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 25.h),
               decoration: BoxDecoration(
                 gradient: LinearGradient(
-                  colors: [AppColors.primary, Color(0xFFFF7FA8)],
+                  colors: [AppColors.primary, const Color(0xFFFF7FA8)],
                   begin: Alignment.bottomRight,
                   end: Alignment.topLeft,
                 ),
@@ -58,9 +34,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
               child: Row(
                 children: [
                   InkWell(
-                    onTap: () {
-                      Navigator.pop(context);
-                    },
+                    onTap: () => Navigator.pop(context),
                     child: Container(
                       width: 40.w,
                       height: 40.w,
@@ -105,26 +79,83 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
             Expanded(
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20.w),
-                child: GridView.builder(
-                  itemCount: categories.length,
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    mainAxisSpacing: 20.h,
-                    crossAxisSpacing: 20.w,
-                    childAspectRatio: 0.9,
-                  ),
-                  itemBuilder: (context, index) {
-                    final category = categories[index];
-                    return CategoryCard(
-                      title: category["title"]!,
-                      emoji: category["emoji"]!,
-                    );
+                child: BlocBuilder<CategoriesCubit, CategoriesState>(
+                  builder: (context, state) {
+                    if (state is CategoriesLoaded) {
+                      return GridView.builder(
+                        itemCount: state.categories.length,
+                        gridDelegate:
+                            SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          mainAxisSpacing: 20.h,
+                          crossAxisSpacing: 20.w,
+                          childAspectRatio: 0.9,
+                        ),
+                        itemBuilder: (context, index) {
+                          final category = state.categories[index];
+
+                          return CategoryCard(
+                            title: category["title"]!,
+                            emoji: category["emoji"]!,
+                            onDelete: () async {
+                              final deletedItem = category;
+
+                              final confirm = await showDialog(
+                                context: context,
+                                builder: (context) => AlertDialog(
+                                  title: const Text("Delete Category"),
+                                  content: const Text(
+                                      "Are you sure you want to delete this category?"),
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () =>
+                                          Navigator.pop(context, false),
+                                      child: const Text("Cancel"),
+                                    ),
+                                    TextButton(
+                                      onPressed: () =>
+                                          Navigator.pop(context, true),
+                                      child: const Text("Delete"),
+                                    ),
+                                  ],
+                                ),
+                              );
+
+                              if (confirm == true) {
+                                context
+                                    .read<CategoriesCubit>()
+                                    .deleteCategory(index);
+
+                                // SnackBar مع Undo
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text(
+                                        "${deletedItem['title']} deleted"),
+                                    action: SnackBarAction(
+                                      label: "Undo",
+                                      onPressed: () {
+                                        context
+                                            .read<CategoriesCubit>()
+                                            .addCategory(deletedItem);
+                                      },
+                                    ),
+                                  ),
+                                );
+                              }
+                            },
+                          );
+                        },
+                      );
+                    }
+
+                    return const Center(
+                        child: CircularProgressIndicator());
                   },
                 ),
               ),
             ),
 
-            /// BUTTON
+            /// ADD BUTTON
             Padding(
               padding: EdgeInsets.all(20.w),
               child: SizedBox(
@@ -137,7 +168,16 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                       borderRadius: BorderRadius.circular(16.r),
                     ),
                   ),
-                  onPressed: _showAddCategoryDialog,
+                  onPressed: () async {
+                    final result = await showDialog(
+                      context: context,
+                      builder: (context) => const Popup(),
+                    );
+
+                    if (result != null) {
+                      context.read<CategoriesCubit>().addCategory(result);
+                    }
+                  },
                   child: const Text(
                     "Add Category",
                     style: TextStyle(color: Colors.white),
