@@ -14,6 +14,7 @@ class CategoriesScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.scaffoldBackground,
+
       body: SafeArea(
         child: Column(
           children: [
@@ -39,7 +40,7 @@ class CategoriesScreen extends StatelessWidget {
                       width: 40.w,
                       height: 40.w,
                       decoration: BoxDecoration(
-                        color: AppColors.cardBackground.withOpacity(0.25),
+                        color: AppColors.cardBackground.withOpacity(.25),
                         borderRadius: BorderRadius.circular(12.r),
                       ),
                       child: Icon(
@@ -48,7 +49,9 @@ class CategoriesScreen extends StatelessWidget {
                       ),
                     ),
                   ),
+
                   SizedBox(width: 15.w),
+
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -60,6 +63,7 @@ class CategoriesScreen extends StatelessWidget {
                           fontWeight: FontWeight.w700,
                         ),
                       ),
+
                       Text(
                         "Manage your expense categories",
                         style: TextStyle(
@@ -79,77 +83,38 @@ class CategoriesScreen extends StatelessWidget {
             Expanded(
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20.w),
+
                 child: BlocBuilder<CategoriesCubit, CategoriesState>(
                   builder: (context, state) {
                     if (state is CategoriesLoaded) {
                       return GridView.builder(
                         itemCount: state.categories.length,
-                        gridDelegate:
-                            SliverGridDelegateWithFixedCrossAxisCount(
+
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 2,
                           mainAxisSpacing: 20.h,
                           crossAxisSpacing: 20.w,
-                          childAspectRatio: 0.9,
+                          childAspectRatio: .9,
                         ),
+
                         itemBuilder: (context, index) {
                           final category = state.categories[index];
 
                           return CategoryCard(
                             title: category["title"]!,
                             emoji: category["emoji"]!,
-                            onDelete: () async {
-                              final deletedItem = category;
 
-                              final confirm = await showDialog(
-                                context: context,
-                                builder: (context) => AlertDialog(
-                                  title: const Text("Delete Category"),
-                                  content: const Text(
-                                      "Are you sure you want to delete this category?"),
-                                  actions: [
-                                    TextButton(
-                                      onPressed: () =>
-                                          Navigator.pop(context, false),
-                                      child: const Text("Cancel"),
-                                    ),
-                                    TextButton(
-                                      onPressed: () =>
-                                          Navigator.pop(context, true),
-                                      child: const Text("Delete"),
-                                    ),
-                                  ],
-                                ),
+                            onDelete: () {
+                              context.read<CategoriesCubit>().deleteCategory(
+                                index,
                               );
-
-                              if (confirm == true) {
-                                context
-                                    .read<CategoriesCubit>()
-                                    .deleteCategory(index);
-
-                                // SnackBar مع Undo
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                    content: Text(
-                                        "${deletedItem['title']} deleted"),
-                                    action: SnackBarAction(
-                                      label: "Undo",
-                                      onPressed: () {
-                                        context
-                                            .read<CategoriesCubit>()
-                                            .addCategory(deletedItem);
-                                      },
-                                    ),
-                                  ),
-                                );
-                              }
                             },
                           );
                         },
                       );
                     }
 
-                    return const Center(
-                        child: CircularProgressIndicator());
+                    return const Center(child: CircularProgressIndicator());
                   },
                 ),
               ),
@@ -158,9 +123,11 @@ class CategoriesScreen extends StatelessWidget {
             /// ADD BUTTON
             Padding(
               padding: EdgeInsets.all(20.w),
+
               child: SizedBox(
                 width: 200.w,
                 height: 60.h,
+
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.primary,
@@ -168,17 +135,19 @@ class CategoriesScreen extends StatelessWidget {
                       borderRadius: BorderRadius.circular(16.r),
                     ),
                   ),
+
                   onPressed: () async {
                     final result = await showDialog(
                       context: context,
-                      builder: (context) => const Popup(),
+                      builder: (context) =>Popup(),
                     );
 
                     if (result != null) {
                       context.read<CategoriesCubit>().addCategory(result);
                     }
                   },
-                  child: const Text(
+
+                  child: Text(
                     "Add Category",
                     style: TextStyle(color: Colors.white),
                   ),
