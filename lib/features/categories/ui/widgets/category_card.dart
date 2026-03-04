@@ -27,7 +27,7 @@ class CategoryCard extends StatelessWidget {
               BoxShadow(
                 color: AppColors.textPrimary.withOpacity(0.08),
                 blurRadius: 20,
-                offset: const Offset(0, 10),
+                offset:  Offset(0, 10),
               ),
             ],
           ),
@@ -67,7 +67,7 @@ class CategoryCard extends StatelessWidget {
           right: 8,
           child: GestureDetector(
             onTap: onDelete,
-            child: const Icon(
+            child: Icon(
               Icons.delete,
               color: Colors.red,
               size: 20,
