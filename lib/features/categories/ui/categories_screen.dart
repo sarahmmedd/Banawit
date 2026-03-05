@@ -1,53 +1,30 @@
+import 'package:banawit/features/categories/cubit/categories_cubit.dart';
+import 'package:banawit/features/categories/cubit/categories_state.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:banawit/core/theme/app_colors.dart';
 import 'widgets/category_card.dart';
+import 'popup.dart';
 
 class CategoriesScreen extends StatelessWidget {
   const CategoriesScreen({super.key});
-
-  // rokaya "dialog"
-  void _showAddCategoryDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return Dialog(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20.r),
-          ),
-          child: Container(
-            height: 250.h,
-            padding: EdgeInsets.all(20.w),
-            decoration: BoxDecoration(
-              color: AppColors.cardBackground,
-              borderRadius: BorderRadius.circular(20.r),
-            ),
-            child: const Center(
-              child: Text(
-                "Add Category Form Here",
-                style: TextStyle(fontSize: 16),
-              ),
-            ),
-          ),
-        );
-      },
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.scaffoldBackground,
+
       body: SafeArea(
         child: Column(
           children: [
-            //Top Gradient Header
+            /// HEADER
             Container(
               width: double.infinity,
               padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 25.h),
               decoration: BoxDecoration(
                 gradient: LinearGradient(
-                  colors: [AppColors.primary, Color(0xFFFF7FA8)],
+                  colors: [AppColors.primary, const Color(0xFFFF7FA8)],
                   begin: Alignment.bottomRight,
                   end: Alignment.topLeft,
                 ),
@@ -58,14 +35,12 @@ class CategoriesScreen extends StatelessWidget {
               child: Row(
                 children: [
                   InkWell(
-                    onTap: () {
-                      Navigator.pop(context);
-                    },
+                    onTap: () => Navigator.pop(context),
                     child: Container(
                       width: 40.w,
                       height: 40.w,
                       decoration: BoxDecoration(
-                        color: AppColors.cardBackground.withOpacity(0.25),
+                        color: AppColors.cardBackground.withOpacity(.25),
                         borderRadius: BorderRadius.circular(12.r),
                       ),
                       child: Icon(
@@ -74,7 +49,9 @@ class CategoriesScreen extends StatelessWidget {
                       ),
                     ),
                   ),
+
                   SizedBox(width: 15.w),
+
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -86,6 +63,7 @@ class CategoriesScreen extends StatelessWidget {
                           fontWeight: FontWeight.w700,
                         ),
                       ),
+
                       Text(
                         "Manage your expense categories",
                         style: TextStyle(
@@ -101,33 +79,55 @@ class CategoriesScreen extends StatelessWidget {
 
             SizedBox(height: 25.h),
 
-            // Grid
+            /// GRID
             Expanded(
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20.w),
-                child: GridView.count(
-                  crossAxisCount: 2,
-                  mainAxisSpacing: 20.h,
-                  crossAxisSpacing: 20.w,
-                  childAspectRatio: 0.9,
-                  children: const [
-                    CategoryCard(title: "Food", emoji: "🍔"),
-                    CategoryCard(title: "Transport", emoji: "🚗"),
-                    CategoryCard(title: "Shopping", emoji: "🛍️"),
-                    CategoryCard(title: "Entertainment", emoji: "🎬"),
-                    CategoryCard(title: "Health", emoji: "🏥"),
-                    CategoryCard(title: "Bills", emoji: "💰"),
-                  ],
+
+                child: BlocBuilder<CategoriesCubit, CategoriesState>(
+                  builder: (context, state) {
+                    if (state is CategoriesLoaded) {
+                      return GridView.builder(
+                        itemCount: state.categories.length,
+
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          mainAxisSpacing: 20.h,
+                          crossAxisSpacing: 20.w,
+                          childAspectRatio: .9,
+                        ),
+
+                        itemBuilder: (context, index) {
+                          final category = state.categories[index];
+
+                          return CategoryCard(
+                            title: category["title"]!,
+                            emoji: category["emoji"]!,
+
+                            onDelete: () {
+                              context.read<CategoriesCubit>().deleteCategory(
+                                index,
+                              );
+                            },
+                          );
+                        },
+                      );
+                    }
+
+                    return const Center(child: CircularProgressIndicator());
+                  },
                 ),
               ),
             ),
 
-            // Add Category Button
+            /// ADD BUTTON
             Padding(
               padding: EdgeInsets.all(20.w),
+
               child: SizedBox(
                 width: 200.w,
                 height: 60.h,
+
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.primary,
@@ -135,20 +135,21 @@ class CategoriesScreen extends StatelessWidget {
                       borderRadius: BorderRadius.circular(16.r),
                     ),
                   ),
-                  onPressed: () => _showAddCategoryDialog(context),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Icon(Icons.add, color: AppColors.cardBackground),
-                      SizedBox(width: 8.w),
-                      const Text(
-                        "Add Category",
-                        style: TextStyle(
-                          color: AppColors.cardBackground,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ],
+
+                  onPressed: () async {
+                    final result = await showDialog(
+                      context: context,
+                      builder: (context) => Popup(),
+                    );
+
+                    if (result != null) {
+                      context.read<CategoriesCubit>().addCategory(result);
+                    }
+                  },
+
+                  child: Text(
+                    "Add Category",
+                    style: TextStyle(color: Colors.white),
                   ),
                 ),
               ),
