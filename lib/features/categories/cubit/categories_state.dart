@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // sealed class CategoriesState {}
 
 // final class CategoriesInitial extends CategoriesState {}
@@ -66,6 +67,8 @@
 //   }
 // }
 
+=======
+>>>>>>> budget_states
 sealed class CategoriesState {}
 
 final class CategoriesInitial extends CategoriesState {}
@@ -74,4 +77,8 @@ final class CategoriesLoaded extends CategoriesState {
   final List<Map<String, String>> categories;
 
   CategoriesLoaded(this.categories);
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> budget_states

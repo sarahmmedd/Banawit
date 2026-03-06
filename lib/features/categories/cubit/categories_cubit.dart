@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // import 'dart:convert';
 // import 'package:flutter_bloc/flutter_bloc.dart';
 // import 'package:shared_preferences/shared_preferences.dart';
@@ -85,6 +86,10 @@
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'categories_state.dart';
+=======
+import 'package:banawit/features/categories/cubit/categories_state.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+>>>>>>> budget_states
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 
@@ -110,6 +115,7 @@ class CategoriesCubit extends Cubit<CategoriesState> {
     if (savedCategories != null && savedCategories.isNotEmpty) {
       _categories.clear();
 
+<<<<<<< HEAD
       _categories.addAll(savedCategories.map((catJson) {
         Map<String, dynamic> map = jsonDecode(catJson);
 
@@ -118,6 +124,18 @@ class CategoriesCubit extends Cubit<CategoriesState> {
           "emoji": map['emoji'].toString(),
         };
       }).toList());
+=======
+      _categories.addAll(
+        savedCategories.map((catJson) {
+          Map<String, dynamic> map = jsonDecode(catJson);
+
+          return {
+            "title": map['title'].toString(),
+            "emoji": map['emoji'].toString(),
+          };
+        }).toList(),
+      );
+>>>>>>> budget_states
     }
 
     emit(CategoriesLoaded(List.from(_categories)));
@@ -127,8 +145,14 @@ class CategoriesCubit extends Cubit<CategoriesState> {
   Future<void> saveCategories() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
+<<<<<<< HEAD
     List<String> categoriesJson =
         _categories.map((cat) => jsonEncode(cat)).toList();
+=======
+    List<String> categoriesJson = _categories
+        .map((cat) => jsonEncode(cat))
+        .toList();
+>>>>>>> budget_states
 
     await prefs.setStringList('categories', categoriesJson);
   }
@@ -146,4 +170,8 @@ class CategoriesCubit extends Cubit<CategoriesState> {
     emit(CategoriesLoaded(List.from(_categories)));
     saveCategories();
   }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> budget_states

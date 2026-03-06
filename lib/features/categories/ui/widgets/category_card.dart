@@ -27,7 +27,11 @@ class CategoryCard extends StatelessWidget {
               BoxShadow(
                 color: AppColors.textPrimary.withOpacity(0.08),
                 blurRadius: 20,
+<<<<<<< HEAD
                 offset:  Offset(0, 10),
+=======
+                offset: Offset(0, 10),
+>>>>>>> budget_states
               ),
             ],
           ),
@@ -43,10 +47,14 @@ class CategoryCard extends StatelessWidget {
                     borderRadius: BorderRadius.circular(16.r),
                   ),
                   child: Center(
+<<<<<<< HEAD
                     child: Text(
                       emoji,
                       style: TextStyle(fontSize: 28.sp),
                     ),
+=======
+                    child: Text(emoji, style: TextStyle(fontSize: 28.sp)),
+>>>>>>> budget_states
                   ),
                 ),
                 SizedBox(height: 12.h),
@@ -67,14 +75,22 @@ class CategoryCard extends StatelessWidget {
           right: 8,
           child: GestureDetector(
             onTap: onDelete,
+<<<<<<< HEAD
             child: Icon(
               Icons.delete,
               color: Colors.red,
               size: 20,
             ),
+=======
+            child: Icon(Icons.delete, color: Colors.red, size: 20),
+>>>>>>> budget_states
           ),
         ),
       ],
     );
   }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> budget_states

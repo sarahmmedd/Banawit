@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // import 'package:banawit/features/budget/ui/budget_screen.dart';
 // import 'package:banawit/features/categories/cubit/categories_cubit.dart';
 // import 'package:banawit/features/categories/ui/categories_screen.dart';
@@ -85,6 +86,9 @@
 
 //
 
+=======
+import 'package:banawit/features/budget/cubit/budget_bloc.dart';
+>>>>>>> budget_states
 import 'package:banawit/features/budget/ui/budget_screen.dart';
 import 'package:banawit/features/categories/cubit/categories_cubit.dart';
 import 'package:banawit/features/categories/ui/categories_screen.dart';
@@ -131,11 +135,24 @@ class HomeScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   /// BUDGET
+<<<<<<< HEAD
+=======
+                  /// BUDGET
+>>>>>>> budget_states
                   InkWell(
                     onTap: () {
                       Navigator.push(
                         context,
+<<<<<<< HEAD
                         MaterialPageRoute(builder: (context) => BudgetScreen()),
+=======
+                        MaterialPageRoute(
+                          builder: (context) => BlocProvider(
+                            create: (_) => BudgetBloc(),
+                            child: const BudgetScreen(),
+                          ),
+                        ),
+>>>>>>> budget_states
                       );
                     },
                     child: CustomCard(icon: Icons.trending_up, title: "Budget"),
