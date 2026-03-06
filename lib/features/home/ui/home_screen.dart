@@ -2,6 +2,7 @@ import 'package:banawit/features/budget/cubit/budget_bloc.dart';
 import 'package:banawit/features/budget/ui/budget_screen.dart';
 import 'package:banawit/features/categories/cubit/categories_cubit.dart';
 import 'package:banawit/features/categories/ui/categories_screen.dart';
+import 'package:banawit/features/expenses/cubit/expenses_cubit.dart'; // ← أضف الـ import ده
 import 'package:banawit/features/expenses/ui/expenses_screen.dart';
 import 'package:banawit/features/home/ui/widgets/custom_budget_card.dart';
 import 'package:banawit/features/home/ui/widgets/custom_card.dart';
@@ -94,7 +95,13 @@ class HomeScreen extends StatelessWidget {
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => ExpensesScreen()),
+            MaterialPageRoute(
+              builder: (context) => BlocProvider(
+                // ← ده اللي اتضاف
+                create: (_) => ExpenseCubit(), // ← بيوفّر الـ Cubit
+                child: const ExpensesScreen(), // ← للشاشة
+              ),
+            ),
           );
         },
       ),
