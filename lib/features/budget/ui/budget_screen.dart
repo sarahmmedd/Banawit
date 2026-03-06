@@ -26,11 +26,11 @@ class _HomeScreenState extends State<BudgetScreen> {
               width: double.infinity,
               height: 170,
               padding: const EdgeInsets.symmetric(vertical: 30),
-              decoration: BoxDecoration(
-                gradient: const LinearGradient(
+              decoration: const BoxDecoration(
+                gradient: LinearGradient(
                   colors: [Color(0xFFFF5F9E), Color(0xFFFF2E63)],
                 ),
-                borderRadius: const BorderRadius.only(
+                borderRadius: BorderRadius.only(
                   bottomLeft: Radius.circular(30),
                   bottomRight: Radius.circular(30),
                 ),
@@ -73,8 +73,10 @@ class _HomeScreenState extends State<BudgetScreen> {
                 ],
               ),
             ),
+
             const SizedBox(height: 25),
 
+            /// SET BUDGET CARD
             Container(
               margin: const EdgeInsets.symmetric(horizontal: 20),
               padding: const EdgeInsets.all(20),
@@ -110,6 +112,7 @@ class _HomeScreenState extends State<BudgetScreen> {
                       ),
                     ],
                   ),
+
                   const SizedBox(height: 20),
 
                   Container(
@@ -136,6 +139,7 @@ class _HomeScreenState extends State<BudgetScreen> {
                       ],
                     ),
                   ),
+
                   const SizedBox(height: 20),
 
                   GestureDetector(
@@ -174,8 +178,10 @@ class _HomeScreenState extends State<BudgetScreen> {
                 ],
               ),
             ),
+
             const SizedBox(height: 25),
 
+            /// BUDGET OVERVIEW
             BlocBuilder<BudgetBloc, BudgetState>(
               builder: (context, state) {
                 if (state.budget == 0) return const SizedBox();
@@ -191,16 +197,18 @@ class _HomeScreenState extends State<BudgetScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
+                      const Text(
                         "Budget Overview",
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.w600,
                         ),
                       ),
+
                       const SizedBox(height: 10),
+
                       Row(
-                        children: [
+                        children: const [
                           Text(
                             "spent",
                             style: TextStyle(color: Colors.grey, fontSize: 20),
@@ -215,121 +223,125 @@ class _HomeScreenState extends State<BudgetScreen> {
                           ),
                         ],
                       ),
-                      SizedBox(height: 5),
+
+                      const SizedBox(height: 5),
+
                       LinearProgressIndicator(
                         value: state.percentage,
                         minHeight: 15,
                         borderRadius: BorderRadius.circular(10),
                         backgroundColor: Colors.pink[100],
                       ),
-                      SizedBox(height: 15),
-                      Column(
-                        children: [
-                          Row(
-                            children: [
-                              Container(
-                                height: 120,
-                                width: 200,
-                                decoration: BoxDecoration(
-                                  color: const Color.fromARGB(205, 243, 229, 234),
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                child: Padding(
-                                  padding: EdgeInsets.all(20),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        "Budget",
-                                        style: TextStyle(
-                                          color: Colors.grey[500],
-                                          fontSize: 18,
-                                        ),
-                                      ),
-                                      SizedBox(height: 8),
-                                      Text(
-                                        "\$${state.budget.toStringAsFixed(2)}",
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 25,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              SizedBox(width: 20),
-                              Container(
-                                height: 120,
-                                width: 200,
-                                decoration: BoxDecoration(
-                                  color: const Color.fromARGB(205, 243, 229, 234),
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                child: Padding(
-                                  padding: EdgeInsets.all(20),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        "Spent",
-                                        style: TextStyle(
-                                          color: Colors.grey[500],
-                                          fontSize: 18,
-                                        ),
-                                      ),
-                                      SizedBox(height: 8),
-                                      Text(
-                                        "\$${state.spent.toStringAsFixed(2)}",
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 25,
-                                          color: Colors.pink[500],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          SizedBox(height: 10),
-                          Container(
-                            height: 120,
-                            width: double.infinity,
-                            decoration: BoxDecoration(
-                              color: const Color.fromARGB(169, 200, 230, 201),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.all(20),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    "Remaining",
-                                    style: TextStyle(
-                                      color: Colors.grey[500],
-                                      fontSize: 18,
-                                    ),
-                                  ),
-                                  SizedBox(height: 8),
-                                  Text(
-                                    "\$${state.remaining.toStringAsFixed(2)}",
 
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 25,
-                                      color: Colors.green[500],
+                      const SizedBox(height: 15),
+
+                      /// FIXED ROW
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Container(
+                              height: 120,
+                              decoration: BoxDecoration(
+                                color: const Color.fromARGB(205, 243, 229, 234),
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.all(20),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      "Budget",
+                                      style: TextStyle(
+                                        color: Colors.grey[500],
+                                        fontSize: 18,
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                    const SizedBox(height: 8),
+                                    Text(
+                                      "\$${state.budget.toStringAsFixed(2)}",
+                                      style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 20,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+
+                          const SizedBox(width: 20),
+
+                          Expanded(
+                            child: Container(
+                              height: 120,
+                              decoration: BoxDecoration(
+                                color: const Color.fromARGB(205, 243, 229, 234),
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.all(20),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      "Spent",
+                                      style: TextStyle(
+                                        color: Colors.grey[500],
+                                        fontSize: 18,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 8),
+                                    Text(
+                                      "\$${state.spent.toStringAsFixed(2)}",
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 20,
+                                        color: Colors.pink[500],
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                           ),
                         ],
+                      ),
+
+                      const SizedBox(height: 10),
+
+                      Container(
+                        height: 120,
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                          color: const Color.fromARGB(169, 200, 230, 201),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(20),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "Remaining",
+                                style: TextStyle(
+                                  color: Colors.grey[500],
+                                  fontSize: 18,
+                                ),
+                              ),
+                              const SizedBox(height: 8),
+                              Text(
+                                "\$${state.remaining.toStringAsFixed(2)}",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 25,
+                                  color: Colors.green[500],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
                       ),
 
                       const SizedBox(height: 10),
@@ -341,6 +353,7 @@ class _HomeScreenState extends State<BudgetScreen> {
 
             const SizedBox(height: 25),
 
+            /// TIPS
             Container(
               width: double.infinity,
               margin: const EdgeInsets.symmetric(horizontal: 20),
@@ -349,31 +362,23 @@ class _HomeScreenState extends State<BudgetScreen> {
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(20),
               ),
-              child: Column(
+              child: const Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
+                children: [
                   Text(
                     "Budget Tips",
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
                   ),
                   SizedBox(height: 15),
-                  Text(
-                    "• Set a realistic budget based on your income",
-                    style: TextStyle(fontSize: 14),
-                  ),
+                  Text("• Set a realistic budget based on your income"),
                   SizedBox(height: 10),
-                  Text(
-                    "• Track your expenses daily to stay on target",
-                    style: TextStyle(fontSize: 14),
-                  ),
+                  Text("• Track your expenses daily to stay on target"),
                   SizedBox(height: 10),
-                  Text(
-                    "• Review and adjust your budget monthly",
-                    style: TextStyle(fontSize: 14),
-                  ),
+                  Text("• Review and adjust your budget monthly"),
                 ],
               ),
             ),
+
             const SizedBox(height: 40),
           ],
         ),
