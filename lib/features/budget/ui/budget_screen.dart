@@ -1,57 +1,71 @@
+import 'package:banawit/features/home/ui/home_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:banawit/core/theme/app_colors.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../cubit/budget_bloc.dart';
+import '../cubit/budget_event.dart';
+import '../cubit/budget_state.dart';
 
-class BudgetScreen extends StatelessWidget {
+class BudgetScreen extends StatefulWidget {
   const BudgetScreen({super.key});
+
+  @override
+  State<BudgetScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<BudgetScreen> {
+  final TextEditingController _controller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.scaffoldBackground,
+      backgroundColor: const Color(0xFFF5E8EC),
       body: SingleChildScrollView(
         child: Column(
           children: [
-            // Top Gradient Header
             Container(
               width: double.infinity,
-              padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 25.h),
+              height: 170,
+              padding: const EdgeInsets.symmetric(vertical: 30),
               decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [AppColors.primary, const Color(0xFFFF7FA8)],
-                  begin: Alignment.bottomRight,
-                  end: Alignment.topLeft,
+                gradient: const LinearGradient(
+                  colors: [Color(0xFFFF5F9E), Color(0xFFFF2E63)],
                 ),
-                borderRadius: BorderRadius.vertical(
-                  bottom: Radius.circular(30.r),
+                borderRadius: const BorderRadius.only(
+                  bottomLeft: Radius.circular(30),
+                  bottomRight: Radius.circular(30),
                 ),
               ),
-              child: Row(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  InkWell(
-                    onTap: () {
-                      Navigator.pop(context);
-                    },
-                    child: Container(
-                      width: 40.w,
-                      height: 40.w,
-                      decoration: BoxDecoration(
-                        color: AppColors.cardBackground.withOpacity(0.25),
-                        borderRadius: BorderRadius.circular(12.r),
-                      ),
-                      child: const Icon(Icons.arrow_back, color: Colors.white),
-                    ),
-                  ),
-                  SizedBox(width: 15.w),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                  Row(
                     children: [
-                      Text(
+                      const SizedBox(width: 16),
+                      GestureDetector(
+                        child: const CircleAvatar(
+                          backgroundColor: Color.fromARGB(84, 255, 255, 255),
+                          child: Icon(
+                            Icons.arrow_back,
+                            color: Colors.white,
+                            size: 20,
+                          ),
+                        ),
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => HomeScreen(),
+                            ),
+                          );
+                        },
+                      ),
+                      const SizedBox(width: 22),
+                      const Text(
                         "Monthly Budget",
                         style: TextStyle(
-                          color: AppColors.cardBackground,
-                          fontSize: 18.sp,
-                          fontWeight: FontWeight.w700,
+                          color: Colors.white,
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
                     ],
@@ -59,9 +73,7 @@ class BudgetScreen extends StatelessWidget {
                 ],
               ),
             ),
-
             const SizedBox(height: 25),
-      
 
             Container(
               margin: const EdgeInsets.symmetric(horizontal: 20),
@@ -69,7 +81,6 @@ class BudgetScreen extends StatelessWidget {
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(20),
-                
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -80,16 +91,17 @@ class BudgetScreen extends StatelessWidget {
                         padding: const EdgeInsets.all(10),
                         decoration: BoxDecoration(
                           gradient: const LinearGradient(
-                            colors: [Color(0xFFFF5F9E), Color(0xFFFF2E63)],),
+                            colors: [Color(0xFFFF5F9E), Color(0xFFFF2E63)],
+                          ),
                           borderRadius: BorderRadius.circular(12),
                         ),
-                        child: Icon(
+                        child: const Icon(
                           Icons.trending_up,
                           color: Colors.white,
                         ),
                       ),
-                      SizedBox(width: 12),
-                      Text(
+                      const SizedBox(width: 12),
+                      const Text(
                         "Set Monthly Budget",
                         style: TextStyle(
                           fontSize: 18,
@@ -99,6 +111,7 @@ class BudgetScreen extends StatelessWidget {
                     ],
                   ),
                   const SizedBox(height: 20),
+
                   Container(
                     height: 55,
                     decoration: BoxDecoration(
@@ -107,12 +120,13 @@ class BudgetScreen extends StatelessWidget {
                     ),
                     padding: const EdgeInsets.symmetric(horizontal: 12),
                     child: Row(
-                      children: const [
-                        Text("\$", style: TextStyle(fontSize: 18)),
-                        SizedBox(width: 8),
+                      children: [
+                        const Text("\$", style: TextStyle(fontSize: 18)),
+                        const SizedBox(width: 8),
                         Expanded(
                           child: TextField(
-                            decoration: InputDecoration(
+                            controller: _controller,
+                            decoration: const InputDecoration(
                               hintText: "0",
                               border: InputBorder.none,
                             ),
@@ -122,43 +136,211 @@ class BudgetScreen extends StatelessWidget {
                       ],
                     ),
                   ),
-      
                   const SizedBox(height: 20),
-      
-                  // Save Button
-                  Container(
-                    height: 50,
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      gradient: const LinearGradient(
-                        colors: [Color(0xFFFF5F9E), Color(0xFFFF2E63)],
+
+                  GestureDetector(
+                    onTap: () {
+                      final amount = double.tryParse(_controller.text) ?? 0;
+                      context.read<BudgetBloc>().add(SetBudget(amount));
+                    },
+                    child: Container(
+                      height: 50,
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        gradient: const LinearGradient(
+                          colors: [Color(0xFFFF5F9E), Color(0xFFFF2E63)],
+                        ),
+                        borderRadius: BorderRadius.circular(12),
                       ),
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: const Center(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(Icons.check, color: Colors.white),
-                          SizedBox(width: 8),
-                          Text(
-                            "Save Budget",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600,
+                      child: const Center(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(Icons.check, color: Colors.white),
+                            SizedBox(width: 8),
+                            Text(
+                              "Save Budget",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w600,
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   ),
                 ],
               ),
-            ),     
+            ),
             const SizedBox(height: 25),
-      
-            
+
+            BlocBuilder<BudgetBloc, BudgetState>(
+              builder: (context, state) {
+                if (state.budget == 0) return const SizedBox();
+
+                return Container(
+                  width: double.infinity,
+                  margin: const EdgeInsets.symmetric(horizontal: 20),
+                  padding: const EdgeInsets.all(20),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Budget Overview",
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      const SizedBox(height: 10),
+                      Row(
+                        children: [
+                          Text(
+                            "spent",
+                            style: TextStyle(color: Colors.grey, fontSize: 20),
+                          ),
+                          Spacer(),
+                          Text(
+                            "0%",
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 5),
+                      LinearProgressIndicator(
+                        value: state.percentage,
+                        minHeight: 15,
+                        borderRadius: BorderRadius.circular(10),
+                        backgroundColor: Colors.pink[100],
+                      ),
+                      SizedBox(height: 15),
+                      Column(
+                        children: [
+                          Row(
+                            children: [
+                              Container(
+                                height: 120,
+                                width: 200,
+                                decoration: BoxDecoration(
+                                  color: const Color.fromARGB(205, 243, 229, 234),
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                child: Padding(
+                                  padding: EdgeInsets.all(20),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        "Budget",
+                                        style: TextStyle(
+                                          color: Colors.grey[500],
+                                          fontSize: 18,
+                                        ),
+                                      ),
+                                      SizedBox(height: 8),
+                                      Text(
+                                        "\$${state.budget.toStringAsFixed(2)}",
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 25,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              SizedBox(width: 20),
+                              Container(
+                                height: 120,
+                                width: 200,
+                                decoration: BoxDecoration(
+                                  color: const Color.fromARGB(205, 243, 229, 234),
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                child: Padding(
+                                  padding: EdgeInsets.all(20),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        "Spent",
+                                        style: TextStyle(
+                                          color: Colors.grey[500],
+                                          fontSize: 18,
+                                        ),
+                                      ),
+                                      SizedBox(height: 8),
+                                      Text(
+                                        "\$${state.spent.toStringAsFixed(2)}",
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 25,
+                                          color: Colors.pink[500],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: 10),
+                          Container(
+                            height: 120,
+                            width: double.infinity,
+                            decoration: BoxDecoration(
+                              color: const Color.fromARGB(169, 200, 230, 201),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(20),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "Remaining",
+                                    style: TextStyle(
+                                      color: Colors.grey[500],
+                                      fontSize: 18,
+                                    ),
+                                  ),
+                                  SizedBox(height: 8),
+                                  Text(
+                                    "\$${state.remaining.toStringAsFixed(2)}",
+
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 25,
+                                      color: Colors.green[500],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+
+                      const SizedBox(height: 10),
+                    ],
+                  ),
+                );
+              },
+            ),
+
+            const SizedBox(height: 25),
+
             Container(
               width: double.infinity,
               margin: const EdgeInsets.symmetric(horizontal: 20),
@@ -166,30 +348,33 @@ class BudgetScreen extends StatelessWidget {
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(20),
-                
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
+                children: const [
                   Text(
                     "Budget Tips",
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w600,
-                    ),
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
                   ),
                   SizedBox(height: 15),
-                  Text("• Set a realistic budget based on your income", style: TextStyle(fontSize: 14)),
+                  Text(
+                    "• Set a realistic budget based on your income",
+                    style: TextStyle(fontSize: 14),
+                  ),
                   SizedBox(height: 10),
-                  Text("• Track your expenses daily to stay on target", style: TextStyle(fontSize: 14)),
+                  Text(
+                    "• Track your expenses daily to stay on target",
+                    style: TextStyle(fontSize: 14),
+                  ),
                   SizedBox(height: 10),
-                  Text("• Review and adjust your budget monthly", style: TextStyle(fontSize: 14)),
-                  
+                  Text(
+                    "• Review and adjust your budget monthly",
+                    style: TextStyle(fontSize: 14),
+                  ),
                 ],
               ),
             ),
             const SizedBox(height: 40),
-          
           ],
         ),
       ),
