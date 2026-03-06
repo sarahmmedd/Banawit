@@ -1,18 +1,12 @@
 import 'package:flutter/material.dart';
-<<<<<<< HEAD
-=======
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:banawit/core/theme/app_colors.dart';
->>>>>>> budget_states
 
 class ExpensesScreen extends StatelessWidget {
   const ExpensesScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-<<<<<<< HEAD
-    return Scaffold();
-=======
     return Scaffold(
       backgroundColor: AppColors.scaffoldBackground,
       body: Column(
@@ -268,6 +262,5 @@ class ExpensesScreen extends StatelessWidget {
         ],
       ),
     );
->>>>>>> budget_states
   }
 }

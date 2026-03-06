@@ -1,12 +1,7 @@
-<<<<<<< HEAD
-import 'package:banawit/features/home/ui/home_screen.dart';
-import 'package:flutter/material.dart';
-=======
 import 'package:banawit/features/categories/cubit/categories_cubit.dart';
 import 'package:banawit/features/home/ui/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
->>>>>>> budget_states
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class BanawitApp extends StatelessWidget {
@@ -18,11 +13,6 @@ class BanawitApp extends StatelessWidget {
       designSize: const Size(360, 690),
       minTextAdapt: true,
       splitScreenMode: true,
-<<<<<<< HEAD
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: HomeScreen(),
-=======
       child: MultiBlocProvider(
         providers: [
           BlocProvider(create: (_) => CategoriesCubit()..loadCategories()),
@@ -31,7 +21,6 @@ class BanawitApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           home: HomeScreen(),
         ),
->>>>>>> budget_states
       ),
     );
   }
