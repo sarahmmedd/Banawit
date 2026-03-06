@@ -139,11 +139,7 @@ class CategoriesScreen extends StatelessWidget {
                   onPressed: () async {
                     final result = await showDialog(
                       context: context,
-<<<<<<< HEAD
-                      builder: (context) =>Popup(),
-=======
                       builder: (context) => Popup(),
->>>>>>> budget_states
                     );
 
                     if (result != null) {

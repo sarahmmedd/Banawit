@@ -1,11 +1,3 @@
-<<<<<<< HEAD
-part of 'budget_cubit.dart';
-
-@immutable
-sealed class BudgetState {}
-
-final class BudgetInitial extends BudgetState {}
-=======
 class BudgetState {
   final double budget;
   final double spent;
@@ -30,4 +22,3 @@ class BudgetState {
     );
   }
 }
->>>>>>> budget_states

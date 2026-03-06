@@ -37,11 +37,7 @@ class _PopupState extends State<Popup> {
     return Dialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       child: Padding(
-<<<<<<< HEAD
-        padding:EdgeInsets.all(20),
-=======
         padding: EdgeInsets.all(20),
->>>>>>> budget_states
         child: SingleChildScrollView(
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -51,11 +47,7 @@ class _PopupState extends State<Popup> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-<<<<<<< HEAD
-                   Text(
-=======
                   Text(
->>>>>>> budget_states
                     "Add Category",
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   ),
@@ -66,26 +58,15 @@ class _PopupState extends State<Popup> {
                 ],
               ),
 
-<<<<<<< HEAD
-               SizedBox(height: 16),
-
-              /// NAME
-               Text(
-=======
               SizedBox(height: 16),
 
               /// NAME
               Text(
->>>>>>> budget_states
                 "Category Name",
                 style: TextStyle(fontWeight: FontWeight.w600),
               ),
 
-<<<<<<< HEAD
-               SizedBox(height: 8),
-=======
               SizedBox(height: 8),
->>>>>>> budget_states
 
               TextField(
                 controller: controller,
@@ -100,30 +81,14 @@ class _PopupState extends State<Popup> {
                 ),
               ),
 
-<<<<<<< HEAD
-               SizedBox(height: 20),
-
-              /// ICONS
-               Text(
-=======
               SizedBox(height: 20),
 
               /// ICONS
               Text(
->>>>>>> budget_states
                 "Choose Icon",
                 style: TextStyle(fontWeight: FontWeight.w600),
               ),
 
-<<<<<<< HEAD
-               SizedBox(height: 10),
-
-              GridView.builder(
-                shrinkWrap: true,
-                physics:  NeverScrollableScrollPhysics(),
-                itemCount: icons.length,
-                gridDelegate:  SliverGridDelegateWithFixedCrossAxisCount(
-=======
               SizedBox(height: 10),
 
               GridView.builder(
@@ -131,7 +96,6 @@ class _PopupState extends State<Popup> {
                 physics: NeverScrollableScrollPhysics(),
                 itemCount: icons.length,
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
->>>>>>> budget_states
                   crossAxisCount: 8,
                   crossAxisSpacing: 6,
                   mainAxisSpacing: 6,
@@ -148,11 +112,7 @@ class _PopupState extends State<Popup> {
                     child: Container(
                       decoration: BoxDecoration(
                         color: selectedIcon == icon
-<<<<<<< HEAD
-                            ?  Color(0xFFFFE0EF)
-=======
                             ? Color(0xFFFFE0EF)
->>>>>>> budget_states
                             : Colors.grey[100],
                         borderRadius: BorderRadius.circular(10),
                         border: selectedIcon == icon
@@ -160,41 +120,25 @@ class _PopupState extends State<Popup> {
                             : null,
                       ),
                       child: Center(
-<<<<<<< HEAD
-                        child: Text(icon, style:  TextStyle(fontSize: 20)),
-=======
                         child: Text(icon, style: TextStyle(fontSize: 20)),
->>>>>>> budget_states
                       ),
                     ),
                   );
                 },
               ),
 
-<<<<<<< HEAD
-               SizedBox(height: 20),
-=======
               SizedBox(height: 20),
->>>>>>> budget_states
               // BUTTONS
               Row(
                 children: [
                   Expanded(
                     child: OutlinedButton(
                       onPressed: () => Navigator.pop(context),
-<<<<<<< HEAD
-                      child:  Text("Cancel"),
-                    ),
-                  ),
-
-                   SizedBox(width: 12),
-=======
                       child: Text("Cancel"),
                     ),
                   ),
 
                   SizedBox(width: 12),
->>>>>>> budget_states
 
                   Expanded(
                     child: ElevatedButton(
@@ -209,14 +153,7 @@ class _PopupState extends State<Popup> {
                           "emoji": selectedIcon,
                         });
                       },
-<<<<<<< HEAD
-                      child:  Text(
-                        "Add",
-                        style: TextStyle(color: Colors.white),
-                      ),
-=======
                       child: Text("Add", style: TextStyle(color: Colors.white)),
->>>>>>> budget_states
                     ),
                   ),
                 ],
