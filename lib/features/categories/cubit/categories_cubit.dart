@@ -8,7 +8,8 @@ class CategoriesCubit extends Cubit<CategoriesState> {
     loadCategories();
   }
 
-  final List<Map<String, String>> _categories = [
+  /// DEFAULT CATEGORIES
+  final List<Map<String, String>> _defaultCategories = [
     {"title": "Food", "emoji": "🍔"},
     {"title": "Transport", "emoji": "🚗"},
     {"title": "Shopping", "emoji": "🛍"},
@@ -17,7 +18,9 @@ class CategoriesCubit extends Cubit<CategoriesState> {
     {"title": "Bills", "emoji": "💰"},
   ];
 
-  /// LOAD FROM STORAGE
+  final List<Map<String, String>> _categories = [];
+
+  /// LOAD
   Future<void> loadCategories() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     List<String>? savedCategories = prefs.getStringList('categories');
@@ -35,18 +38,20 @@ class CategoriesCubit extends Cubit<CategoriesState> {
           };
         }).toList(),
       );
+    } else {
+      _categories.clear();
+      _categories.addAll(_defaultCategories);
     }
 
     emit(CategoriesLoaded(List.from(_categories)));
   }
 
-  /// SAVE TO STORAGE
+  /// SAVE
   Future<void> saveCategories() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    List<String> categoriesJson = _categories
-        .map((cat) => jsonEncode(cat))
-        .toList();
+    List<String> categoriesJson =
+        _categories.map((cat) => jsonEncode(cat)).toList();
 
     await prefs.setStringList('categories', categoriesJson);
   }
@@ -63,5 +68,17 @@ class CategoriesCubit extends Cubit<CategoriesState> {
     _categories.removeAt(index);
     emit(CategoriesLoaded(List.from(_categories)));
     saveCategories();
+  }
+
+  /// CLEAR DATA (ترجع للديفولت)
+  Future<void> clearCategories() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    await prefs.remove('categories');
+
+    _categories.clear();
+    _categories.addAll(_defaultCategories);
+
+    emit(CategoriesLoaded(List.from(_categories)));
   }
 }

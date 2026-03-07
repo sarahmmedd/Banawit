@@ -1,10 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:banawit/core/theme/app_colors.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../categories/cubit/categories_cubit.dart';
+import '../../../categories/cubit/categories_state.dart';
 
-class FourthSection extends StatelessWidget {
+class FourthSection extends StatefulWidget {
   const FourthSection({super.key});
 
+  @override
+  State<FourthSection> createState() => _FourthSectionState();
+}
+
+class _FourthSectionState extends State<FourthSection> {
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -36,11 +44,34 @@ class FourthSection extends StatelessWidget {
               ),
               SizedBox(height: 20.h),
 
-              _statRow("Total Expenses", "2"),
+             _statRow(
+                    "Total Expenses",
+                    "2"
+                  ),
+               
+
               SizedBox(height: 16.h),
-              _statRow("Categories", "7"),
+
+              BlocConsumer<CategoriesCubit, CategoriesState>(
+                listener: (context, state) {
+                  
+                },
+                builder: (context, state) {
+                  int count = 0;
+                  if (state is CategoriesLoaded) {
+                    count = state.categories.length;
+                  }
+                  return _statRow("Categories", count.toString());
+                },
+              ),
+
               SizedBox(height: 16.h),
-              _statRow("Monthly Budget", "\$70000000"),
+
+ _statRow(
+                    "Monthly Budget",
+                    "2000",
+                  )
+               
             ],
           ),
         ),
@@ -54,7 +85,10 @@ class FourthSection extends StatelessWidget {
       children: [
         Text(
           title,
-          style: TextStyle(fontSize: 14.sp, color: AppColors.textSecondary),
+          style: TextStyle(
+            fontSize: 14.sp,
+            color: AppColors.textSecondary,
+          ),
         ),
         Text(
           value,
