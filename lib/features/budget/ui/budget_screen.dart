@@ -2,7 +2,6 @@ import 'package:banawit/features/home/ui/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../cubit/budget_bloc.dart';
-import '../cubit/budget_event.dart';
 import '../cubit/budget_state.dart';
 
 class BudgetScreen extends StatefulWidget {
@@ -25,14 +24,14 @@ class _HomeScreenState extends State<BudgetScreen> {
             Container(
               width: double.infinity,
               height: 170,
-              padding: const EdgeInsets.symmetric(vertical: 30),
+              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 25),
               decoration: BoxDecoration(
                 gradient: const LinearGradient(
                   colors: [Color(0xFFFF5F9E), Color(0xFFFF2E63)],
                 ),
                 borderRadius: const BorderRadius.only(
                   bottomLeft: Radius.circular(30),
-                  bottomRight: Radius.circular(30),
+                  bottomRight: Radius.circular(30)
                 ),
               ),
               child: Column(
@@ -47,7 +46,7 @@ class _HomeScreenState extends State<BudgetScreen> {
                           child: Icon(
                             Icons.arrow_back,
                             color: Colors.white,
-                            size: 20,
+                            size: 20
                           ),
                         ),
                         onTap: () {
@@ -65,7 +64,7 @@ class _HomeScreenState extends State<BudgetScreen> {
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 24,
-                          fontWeight: FontWeight.bold,
+                          fontWeight: FontWeight.bold
                         ),
                       ),
                     ],
@@ -80,7 +79,7 @@ class _HomeScreenState extends State<BudgetScreen> {
               padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
                 color: Colors.white,
-                borderRadius: BorderRadius.circular(20),
+                borderRadius: BorderRadius.circular(20)
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -97,7 +96,7 @@ class _HomeScreenState extends State<BudgetScreen> {
                         ),
                         child: const Icon(
                           Icons.trending_up,
-                          color: Colors.white,
+                          color: Colors.white
                         ),
                       ),
                       const SizedBox(width: 12),
@@ -105,7 +104,7 @@ class _HomeScreenState extends State<BudgetScreen> {
                         "Set Monthly Budget",
                         style: TextStyle(
                           fontSize: 18,
-                          fontWeight: FontWeight.w600,
+                          fontWeight: FontWeight.w600
                         ),
                       ),
                     ],
@@ -130,7 +129,7 @@ class _HomeScreenState extends State<BudgetScreen> {
                               hintText: "0",
                               border: InputBorder.none,
                             ),
-                            keyboardType: TextInputType.number,
+                            keyboardType: TextInputType.number
                           ),
                         ),
                       ],
@@ -141,7 +140,7 @@ class _HomeScreenState extends State<BudgetScreen> {
                   GestureDetector(
                     onTap: () {
                       final amount = double.tryParse(_controller.text) ?? 0;
-                      context.read<BudgetBloc>().add(SetBudget(amount));
+                      context.read<BudgetBloc>().setBudget(amount);
                     },
                     child: Container(
                       height: 50,
@@ -163,7 +162,7 @@ class _HomeScreenState extends State<BudgetScreen> {
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 16,
-                                fontWeight: FontWeight.w600,
+                                fontWeight: FontWeight.w600
                               ),
                             ),
                           ],
@@ -195,7 +194,7 @@ class _HomeScreenState extends State<BudgetScreen> {
                         "Budget Overview",
                         style: TextStyle(
                           fontSize: 18,
-                          fontWeight: FontWeight.w600,
+                          fontWeight: FontWeight.w600
                         ),
                       ),
                       const SizedBox(height: 10),
@@ -210,7 +209,7 @@ class _HomeScreenState extends State<BudgetScreen> {
                             "0%",
                             style: TextStyle(
                               fontSize: 20,
-                              fontWeight: FontWeight.bold,
+                              fontWeight: FontWeight.bold
                             ),
                           ),
                         ],
@@ -220,7 +219,7 @@ class _HomeScreenState extends State<BudgetScreen> {
                         value: state.percentage,
                         minHeight: 15,
                         borderRadius: BorderRadius.circular(10),
-                        backgroundColor: Colors.pink[100],
+                        backgroundColor: Colors.pink[100]
                       ),
                       SizedBox(height: 15),
                       Column(
