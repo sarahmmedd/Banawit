@@ -1,6 +1,11 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:banawit/core/theme/app_colors.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+
+import '../../../categories/cubit/categories_cubit.dart';
 
 class ThirdSection extends StatelessWidget {
   const ThirdSection({super.key});
@@ -37,7 +42,12 @@ class ThirdSection extends StatelessWidget {
               SizedBox(height: 16.h),
 
               GestureDetector(
-                onTap: () {},
+                onTap: ()async {
+                     context.read<CategoriesCubit>().clearCategories();
+
+
+
+                },
                 child: Container(
                   height: 45.h,
                   decoration: BoxDecoration(

@@ -6,85 +6,99 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:banawit/core/theme/app_colors.dart';
 
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../categories/cubit/categories_cubit.dart';
+import '../../budget/cubit/budget_bloc.dart';
+
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.scaffoldBackground,
-      body: Column(
-        children: [
-          /// HEADER
-          Container(
-            width: double.infinity,
-            padding: EdgeInsets.only(
-              top: 25.h,
-              left: 20.w,
-              right: 20.w,
-              bottom: 30.h,
-            ),
-            decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                colors: [Color(0xFFFF5C8A), Color(0xFFFF2A5F)],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<CategoriesCubit>(
+          create: (_) => CategoriesCubit(),
+        ),
+        BlocProvider<BudgetBloc>(
+          create: (_) => BudgetBloc(),
+        ),
+      ],
+      child: Scaffold(
+        backgroundColor: AppColors.scaffoldBackground,
+        body: Column(
+          children: [
+            /// HEADER
+            Container(
+              width: double.infinity,
+              padding: EdgeInsets.only(
+                top: 25.h,
+                left: 20.w,
+                right: 20.w,
+                bottom: 30.h,
               ),
-              borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(30),
-                bottomRight: Radius.circular(30),
+              decoration: const BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [Color(0xFFFF5C8A), Color(0xFFFF2A5F)],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                ),
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(30),
+                  bottomRight: Radius.circular(30),
+                ),
               ),
-            ),
-            child: Row(
-              children: [
-                /// Back Arrow
-                Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(.2),
-                    borderRadius: BorderRadius.circular(12),
+              child: Row(
+                children: [
+                  /// Back Arrow
+                  Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white.withOpacity(.2),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: IconButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      icon: const Icon(
+                        Icons.arrow_back_ios_new_rounded,
+                        color: Colors.white,
+                      ),
+                    ),
                   ),
-                  child: IconButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    icon: const Icon(
-                      Icons.arrow_back_ios_new_rounded,
+
+                  SizedBox(width: 20.w),
+
+                  /// Title
+                  Text(
+                    "Settings",
+                    style: TextStyle(
+                      fontSize: 22.sp,
+                      fontWeight: FontWeight.w700,
                       color: Colors.white,
                     ),
                   ),
-                ),
-
-                SizedBox(width: 20.w),
-
-                /// Title
-                Text(
-                  "Settings",
-                  style: TextStyle(
-                    fontSize: 22.sp,
-                    fontWeight: FontWeight.w700,
-                    color: Colors.white,
-                  ),
-                ),
-              ],
-            ),
-          ),
-
-          /// BODY
-          Expanded(
-            child: SingleChildScrollView(
-              child: Column(
-                children: const [
-                  SizedBox(height: 20),
-                  FirstSection(),
-                  SecondSection(),
-                  ThirdSection(),
-                  FourthSection(),
-                  SizedBox(height: 30),
                 ],
               ),
             ),
-          ),
-        ],
+
+            /// BODY
+            Expanded(
+              child: SingleChildScrollView(
+                child: Column(
+                  children: const [
+                    SizedBox(height: 20),
+                    FirstSection(),
+                    SecondSection(),
+                    ThirdSection(),   // Clear Data + Categories Default
+                    FourthSection(),  // Statistics Dynamic
+                    SizedBox(height: 30),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
