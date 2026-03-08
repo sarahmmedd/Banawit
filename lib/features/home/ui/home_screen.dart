@@ -97,9 +97,8 @@ class HomeScreen extends StatelessWidget {
             context,
             MaterialPageRoute(
               builder: (context) => BlocProvider(
-                // ← ده اللي اتضاف
-                create: (_) => ExpenseCubit(), // ← بيوفّر الـ Cubit
-                child: const ExpensesScreen(), // ← للشاشة
+                create: (_) => ExpenseCubit(), 
+                child: const ExpensesScreen(),
               ),
             ),
           );
