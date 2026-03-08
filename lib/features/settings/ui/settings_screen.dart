@@ -1,3 +1,4 @@
+import 'package:banawit/features/budget/cubit/budget_cubit.dart';
 import 'package:banawit/features/settings/ui/components/first_section.dart';
 import 'package:banawit/features/settings/ui/components/fourth_section.dart';
 import 'package:banawit/features/settings/ui/components/second_section.dart';
@@ -8,7 +9,7 @@ import 'package:banawit/core/theme/app_colors.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../categories/cubit/categories_cubit.dart';
-import '../../budget/cubit/budget_bloc.dart';
+// import '../../budget/cubit/budget_bloc.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
@@ -17,12 +18,8 @@ class SettingsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider<CategoriesCubit>(
-          create: (_) => CategoriesCubit(),
-        ),
-        BlocProvider<BudgetBloc>(
-          create: (_) => BudgetBloc(),
-        ),
+        BlocProvider<CategoriesCubit>(create: (_) => CategoriesCubit()),
+        BlocProvider<BudgetBloc>(create: (_) => BudgetBloc()),
       ],
       child: Scaffold(
         backgroundColor: AppColors.scaffoldBackground,
@@ -90,8 +87,8 @@ class SettingsScreen extends StatelessWidget {
                     SizedBox(height: 20),
                     FirstSection(),
                     SecondSection(),
-                    ThirdSection(),   // Clear Data + Categories Default
-                    FourthSection(),  // Statistics Dynamic
+                    ThirdSection(), // Clear Data + Categories Default
+                    FourthSection(), // Statistics Dynamic
                     SizedBox(height: 30),
                   ],
                 ),

@@ -1,4 +1,4 @@
-import 'package:banawit/features/budget/cubit/budget_bloc.dart';
+import 'package:banawit/features/budget/cubit/budget_cubit.dart';
 import 'package:banawit/features/budget/ui/budget_screen.dart';
 import 'package:banawit/features/categories/cubit/categories_cubit.dart';
 import 'package:banawit/features/categories/ui/categories_screen.dart';
@@ -97,9 +97,8 @@ class HomeScreen extends StatelessWidget {
             context,
             MaterialPageRoute(
               builder: (context) => BlocProvider(
-                // ← ده اللي اتضاف
-                create: (_) => ExpenseCubit(), // ← بيوفّر الـ Cubit
-                child: const ExpensesScreen(), // ← للشاشة
+                create: (_) => ExpenseCubit(), 
+                child: const ExpensesScreen(),
               ),
             ),
           );
