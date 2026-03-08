@@ -6,9 +6,7 @@ class ExpenseInitial extends ExpenseState {}
 
 class ExpenseSaving extends ExpenseState {}
 
-class ExpenseSaved extends ExpenseState {}
-
-class ExpenseError extends ExpenseState {
-  final String message;
-  ExpenseError(this.message);
+class ExpenseLoaded extends ExpenseState {
+  final List<Expense> expenses;
+  ExpenseLoaded(this.expenses);
 }
