@@ -1,9 +1,11 @@
+import 'package:banawit/features/budget/cubit/budget_cubit.dart';
 import 'package:banawit/features/home/ui/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../cubit/budget_bloc.dart';
-import '../cubit/budget_event.dart';
+// import '../cubit/budget_bloc.dart';
+// import '../cubit/budget_event.dart';
 import '../cubit/budget_state.dart';
+import '../cubit/budget_cubit.dart';
 
 class BudgetScreen extends StatefulWidget {
   const BudgetScreen({super.key});
@@ -75,7 +77,6 @@ class _HomeScreenState extends State<BudgetScreen> {
             ),
 
             const SizedBox(height: 25),
-
             /// SET BUDGET CARD
             Container(
               margin: const EdgeInsets.symmetric(horizontal: 20),
@@ -145,7 +146,7 @@ class _HomeScreenState extends State<BudgetScreen> {
                   GestureDetector(
                     onTap: () {
                       final amount = double.tryParse(_controller.text) ?? 0;
-                      context.read<BudgetBloc>().add(SetBudget(amount));
+                      context.read<BudgetBloc>().setBudget(amount);
                     },
                     child: Container(
                       height: 50,
@@ -178,7 +179,6 @@ class _HomeScreenState extends State<BudgetScreen> {
                 ],
               ),
             ),
-
             const SizedBox(height: 25),
 
             /// BUDGET OVERVIEW
@@ -272,7 +272,6 @@ class _HomeScreenState extends State<BudgetScreen> {
                           ),
 
                           const SizedBox(width: 20),
-
                           Expanded(
                             child: Container(
                               height: 120,
@@ -352,7 +351,6 @@ class _HomeScreenState extends State<BudgetScreen> {
             ),
 
             const SizedBox(height: 25),
-
             /// TIPS
             Container(
               width: double.infinity,

@@ -14,11 +14,11 @@ class BudgetState {
 
   BudgetState copyWith({
     double? budget,
-    double? spent,
+    double? spent
   }) {
     return BudgetState(
       budget: budget ?? this.budget,
-      spent: spent ?? this.spent,
+      spent: spent ?? this.spent
     );
   }
 }
