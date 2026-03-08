@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:banawit/core/theme/app_colors.dart';
-
 import '../../../core/models/expense_model.dart';
 import '../cubit/expenses_cubit.dart';
 
@@ -82,9 +81,8 @@ class _ExpensesScreenState extends State<ExpensesScreen> {
   }
 
   void _showSnackBar(String message) {
-    ScaffoldMessenger.of(
-      context,
-    ).showSnackBar(SnackBar(content: Text(message)));
+    ScaffoldMessenger.of(context)
+        .showSnackBar(SnackBar(content: Text(message)));
   }
 
   void _resetForm() {
@@ -96,16 +94,14 @@ class _ExpensesScreenState extends State<ExpensesScreen> {
     });
   }
 
-
   @override
   Widget build(BuildContext context) {
     return BlocListener<ExpenseCubit, ExpenseState>(
       listener: (context, state) {
-        if (state is ExpenseSaved) {
+        // ← أي تحديث في ال Expenses هيرجع ExpenseLoaded
+        if (state is ExpenseLoaded) {
           _showSnackBar('Expense saved!');
           _resetForm();
-        } else if (state is ExpenseError) {
-          _showSnackBar(state.message);
         }
       },
       child: Scaffold(
@@ -178,7 +174,7 @@ class _ExpensesScreenState extends State<ExpensesScreen> {
                     ),
                     SizedBox(height: 8.h),
                     TextField(
-                      controller: _titleController, // ← wired
+                      controller: _titleController,
                       decoration: InputDecoration(
                         hintText: "e.g., Grocery shopping",
                         hintStyle: TextStyle(
@@ -215,7 +211,7 @@ class _ExpensesScreenState extends State<ExpensesScreen> {
                     ),
                     SizedBox(height: 8.h),
                     TextField(
-                      controller: _amountController, // ← wired
+                      controller: _amountController,
                       keyboardType: TextInputType.number,
                       decoration: InputDecoration(
                         hintText: "0.00",
@@ -253,7 +249,7 @@ class _ExpensesScreenState extends State<ExpensesScreen> {
                     ),
                     SizedBox(height: 8.h),
                     DropdownButtonFormField<String>(
-                      value: _selectedCategory, // ← wired
+                      value: _selectedCategory,
                       decoration: InputDecoration(
                         filled: true,
                         fillColor: AppColors.cardBackground,
@@ -277,30 +273,13 @@ class _ExpensesScreenState extends State<ExpensesScreen> {
                       hint: const Text("Select a category"),
                       items: const [
                         DropdownMenuItem(value: "food", child: Text("🍔 Food")),
-                        DropdownMenuItem(
-                          value: "transport",
-                          child: Text("🚗 Transport"),
-                        ),
-                        DropdownMenuItem(
-                          value: "shopping",
-                          child: Text("🛍 Shopping"),
-                        ),
-                        DropdownMenuItem(
-                          value: "entertainment",
-                          child: Text("🎬 Entertainment"),
-                        ),
-                        DropdownMenuItem(
-                          value: "health",
-                          child: Text("🏥 Health"),
-                        ),
-                        DropdownMenuItem(
-                          value: "bills",
-                          child: Text("💡 Bills"),
-                        ),
+                        DropdownMenuItem(value: "transport", child: Text("🚗 Transport")),
+                        DropdownMenuItem(value: "shopping", child: Text("🛍 Shopping")),
+                        DropdownMenuItem(value: "entertainment", child: Text("🎬 Entertainment")),
+                        DropdownMenuItem(value: "health", child: Text("🏥 Health")),
+                        DropdownMenuItem(value: "bills", child: Text("💡 Bills")),
                       ],
-                      onChanged:
-                          (value) => // ← wired
-                              setState(() => _selectedCategory = value),
+                      onChanged: (value) => setState(() => _selectedCategory = value),
                     ),
 
                     SizedBox(height: 20.h),
@@ -316,12 +295,10 @@ class _ExpensesScreenState extends State<ExpensesScreen> {
                     ),
                     SizedBox(height: 8.h),
                     TextField(
-                      readOnly: true, // ← prevents keyboard; opens picker only
-                      onTap: _pickDate, // ← wired
+                      readOnly: true,
+                      onTap: _pickDate,
                       controller: TextEditingController(
-                        text: _selectedDate != null
-                            ? _formatDate(_selectedDate!)
-                            : '',
+                        text: _selectedDate != null ? _formatDate(_selectedDate!) : '',
                       ),
                       decoration: InputDecoration(
                         hintText: "02/24/2026",
@@ -355,9 +332,7 @@ class _ExpensesScreenState extends State<ExpensesScreen> {
                           width: double.infinity,
                           height: 55.h,
                           child: ElevatedButton(
-                            onPressed: state is ExpenseSaving
-                                ? null
-                                : _saveExpense, // ← wired
+                            onPressed: _saveExpense,
                             style: ElevatedButton.styleFrom(
                               backgroundColor: AppColors.primary,
                               shape: RoundedRectangleBorder(
@@ -365,23 +340,14 @@ class _ExpensesScreenState extends State<ExpensesScreen> {
                               ),
                               elevation: 6,
                             ),
-                            child: state is ExpenseSaving
-                                ? const SizedBox(
-                                    width: 24,
-                                    height: 24,
-                                    child: CircularProgressIndicator(
-                                      color: Colors.white,
-                                      strokeWidth: 2.5,
-                                    ),
-                                  )
-                                : Text(
-                                    "✓  Save Expense",
-                                    style: TextStyle(
-                                      color: AppColors.scaffoldBackground,
-                                      fontSize: 14.sp,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  ),
+                            child: Text(
+                              "✓  Save Expense",
+                              style: TextStyle(
+                                color: AppColors.scaffoldBackground,
+                                fontSize: 14.sp,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
                           ),
                         );
                       },
